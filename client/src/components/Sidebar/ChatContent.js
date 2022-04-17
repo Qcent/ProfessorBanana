@@ -30,9 +30,21 @@ const useStyles = makeStyles((theme) => ({
 
 const ChatContent = ({ otherUser, conversation }) => {
   const classes = useStyles();
-  // const { otherMemberIds } = conversation;
   const latestMessageText = conversation.id && conversation.latestMessageText;
   const latestMessage = conversation.messages[conversation.messages.length - 1];
+
+  if (conversation.otherMemberIds.length > 1) {
+    const { otherMemberIds, members } = conversation;
+    otherUser.username = `${members[otherMemberIds[0]].username}, ${
+      members[otherMemberIds[1]].username
+    } ${
+      otherMemberIds.length === 3
+        ? ' and 1 other'
+        : otherMemberIds.length > 3
+        ? ` and ${otherMemberIds.length - 2} others`
+        : ''
+    }`;
+  }
 
   return (
     <Box className={classes.root}>

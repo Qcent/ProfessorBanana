@@ -40,8 +40,10 @@ const Chat = ({
     await setActiveChat(conversation.id);
   };
 
+  /*
   if (otherMemberIds.length > 1) {
     // find the most recent other user that left a message
+ 
     let i = conversation.messages.length - 1;
     while (i >= 0 && conversation.messages[i].senderId === user.id) {
       i--;
@@ -54,6 +56,7 @@ const Chat = ({
   } else {
     otherUser = conversation.members[otherMemberIds[0]];
   }
+  */
 
   return (
     <Box
