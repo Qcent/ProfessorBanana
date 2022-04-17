@@ -29,6 +29,10 @@ const Sidebar = ({
 }) => {
   const classes = useStyles();
 
+  const activeConvoData = conversations.filter(
+    (convo) => convo.id === activeConversation
+  )[0];
+
   return (
     <Box className={classes.root}>
       <CurrentUser user={user} />
@@ -52,7 +56,7 @@ const Sidebar = ({
               conversation={conversation}
               user={user}
               setActiveChat={setActiveChat}
-              activeConversation={activeConversation}
+              activeConversation={activeConvoData}
               addUserToConvo={addUserToConvo}
             />
           );
