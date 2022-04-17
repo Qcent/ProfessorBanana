@@ -32,9 +32,27 @@ const useStyles = makeStyles(() => ({
     width: 10,
     marginRight: 8,
   },
+  asReadPic: {
+    height: 28,
+    width: 28,
+    marginRight: 11,
+    marginTop: 6,
+  },
+  asReadBadge: {
+    height: 8,
+    width: 8,
+    marginRight: 8,
+  },
 }));
 
-const UserAvatar = ({ sidebar, username, photoUrl, online, inChat }) => {
+const UserAvatar = ({
+  sidebar,
+  username,
+  photoUrl,
+  online,
+  inChat,
+  asRead,
+}) => {
   const classes = useStyles();
 
   return (
@@ -42,8 +60,8 @@ const UserAvatar = ({ sidebar, username, photoUrl, online, inChat }) => {
       <Badge
         classes={{
           badge: `${classes.badge} ${inChat && classes.inChatBadge} ${
-            online && classes.online
-          }`,
+            asRead && classes.asReadBadge
+          } ${online && classes.online}`,
         }}
         variant="dot"
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
@@ -52,7 +70,9 @@ const UserAvatar = ({ sidebar, username, photoUrl, online, inChat }) => {
         <Avatar
           alt={username}
           src={photoUrl}
-          className={inChat ? classes.inChatPic : classes.profilePic}
+          className={`${classes.profilePic} ${inChat && classes.inChatPic} ${
+            asRead && classes.asReadPic
+          }`}
         />
       </Badge>
     </Box>

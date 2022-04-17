@@ -60,12 +60,22 @@ const OtherUserBubble = ({
 
     if (member.lastReadMessage === messageId && memberId !== `${myId}`) {
       avatars.push(
-        <Avatar
-          key={member.id}
-          alt={member.username}
-          src={member.photoUrl}
-          className={classes.avatarSmall}
-        />
+        groupChat.true ? (
+          <BadgeAvatar
+            key={member.id}
+            photoUrl={member.photoUrl}
+            username={member.username}
+            online={member.online}
+            asRead={true}
+          />
+        ) : (
+          <Avatar
+            key={member.id}
+            alt={member.username}
+            src={member.photoUrl}
+            className={classes.avatarSmall}
+          />
+        )
       );
     }
   }
