@@ -40,24 +40,6 @@ const Chat = ({
     await setActiveChat(conversation.id);
   };
 
-  /*
-  if (otherMemberIds.length > 1) {
-    // find the most recent other user that left a message
- 
-    let i = conversation.messages.length - 1;
-    while (i >= 0 && conversation.messages[i].senderId === user.id) {
-      i--;
-    }
-    otherUser =
-      i >= 0
-        ? conversation.members[conversation.messages[i].senderId] ||
-          conversation.members[otherMemberIds[0]]
-        : conversation.members[otherMemberIds[0]];
-  } else {
-    otherUser = conversation.members[otherMemberIds[0]];
-  }
-  */
-
   return (
     <Box
       onClick={() => handleClick()}
@@ -72,7 +54,8 @@ const Chat = ({
       <ChatContent conversation={conversation} otherUser={otherUser} />
       <UnreadMessages count={conversation.myUnreadMessageCount} />
       {(typeof conversation.id === 'string' || activeConversation) &&
-        conversation.id !== activeConversation && (
+        conversation.id !== activeConversation &&
+        conversation.otherMemberIds.length === 1 && (
           <ChatOptionMenu
             activeConversation={activeConversation}
             makeActiveChat={handleClick}

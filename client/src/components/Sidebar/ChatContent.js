@@ -32,10 +32,12 @@ const ChatContent = ({ otherUser, conversation }) => {
   const classes = useStyles();
   const latestMessageText = conversation.id && conversation.latestMessageText;
   const latestMessage = conversation.messages[conversation.messages.length - 1];
+  const groupChat = { true: conversation.otherMemberIds.length > 1 };
 
-  if (conversation.otherMemberIds.length > 1) {
+  console.log(groupChat);
+  if (groupChat.true) {
     const { otherMemberIds, members } = conversation;
-    otherUser.username = `${members[otherMemberIds[0]].username}, ${
+    groupChat.username = `${members[otherMemberIds[0]].username}, ${
       members[otherMemberIds[1]].username
     } ${
       otherMemberIds.length === 3
@@ -50,7 +52,7 @@ const ChatContent = ({ otherUser, conversation }) => {
     <Box className={classes.root}>
       <Box>
         <Typography className={classes.username}>
-          {otherUser.username}
+          {groupChat.true ? groupChat.username : otherUser.username}
         </Typography>
         <Typography
           className={`${classes.previewText} ${
