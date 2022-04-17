@@ -36,28 +36,8 @@ const Chat = ({
   const { otherMemberIds } = conversation;
   let otherUser = conversation.members[otherMemberIds[0]];
 
-  const sortUsersByRecentActivity = (memberIds) => {
-    const { messages } = conversation;
-
-    let ordered = [];
-    let i = messages.length - 1;
-    while (i >= 0) {
-      const { senderId } = messages[i];
-      if (senderId !== user.id && !ordered.includes(senderId)) {
-        ordered.push(senderId);
-        const idx = memberIds.indexOf(senderId);
-        if (idx > -1) {
-          memberIds.splice(idx, 1);
-        }
-        console.log(`Sender ${senderId} found and removed from members`);
-        console.log(memberIds);
-      }
-      i--;
-    }
-    if (memberIds.length) {
-      ordered.push(...memberIds);
-    }
-    return ordered;
+  const handleClick = async () => {
+    await setActiveChat(conversation.id);
   };
 
   if (otherMemberIds.length > 1) {
@@ -65,8 +45,8 @@ const Chat = ({
 
     console.log(
       otherMemberIds,
-      'lets see how they sort:: ',
-      sortUsersByRecentActivity([...otherMemberIds])
+      'lets see how they sort:: '
+      // sortUsersByRecentActivity([...otherMemberIds])
     );
 
     let i = conversation.messages.length - 1;
@@ -81,10 +61,6 @@ const Chat = ({
   } else {
     otherUser = conversation.members[otherMemberIds[0]];
   }
-
-  const handleClick = async () => {
-    await setActiveChat(conversation.id);
-  };
 
   return (
     <Box

@@ -26,6 +26,28 @@ const Home = ({ user, logout }) => {
   const classes = useStyles();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  const sortUsersByRecentActivity = (convo) => {
+    const { messages, otherMemberIds: memberIds } = convo;
+
+    let ordered = [];
+    let i = messages.length - 1;
+    while (i >= 0 && memberIds.length) {
+      const { senderId } = messages[i];
+      if (senderId !== user.id && !ordered.includes(senderId)) {
+        ordered.push(senderId);
+        const idx = memberIds.indexOf(senderId);
+        if (idx > -1) {
+          memberIds.splice(idx, 1);
+        }
+      }
+      i--;
+    }
+    if (memberIds.length) {
+      ordered.push(...memberIds);
+    }
+    return ordered;
+  };
+
   const markMessagesRead = async (lastReadData) => {
     try {
       if (!lastReadData) return;
@@ -188,6 +210,9 @@ const Home = ({ user, logout }) => {
               convoCopy.latestMessageText = message.text;
               if (message.senderId !== user.id) {
                 convoCopy.myUnreadMessageCount++;
+              }
+              if (convo.otherMemberIds.length > 1) {
+                convoCopy.otherMemberIds = sortUsersByRecentActivity(convo);
               }
               return convoCopy;
             } else {
