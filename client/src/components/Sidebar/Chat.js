@@ -54,11 +54,11 @@ const Chat = ({
       <ChatContent conversation={conversation} otherUser={otherUser} />
       <UnreadMessages count={conversation.myUnreadMessageCount} />
       {(typeof conversation.id === 'string' || activeConversation) &&
-        conversation.id !== activeConversation.id &&
+        conversation.id !== activeConversation?.id &&
         conversation.otherMemberIds.length === 1 &&
-        !activeConversation.members[otherUser.id] && (
+        !activeConversation?.members[otherUser.id] && (
           <ChatOptionMenu
-            activeConversation={activeConversation.id}
+            activeConversation={activeConversation?.id}
             makeActiveChat={handleClick}
             addUserToConvo={addUserToConvo}
             otherUser={otherUser}
