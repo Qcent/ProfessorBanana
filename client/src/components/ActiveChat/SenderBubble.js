@@ -69,7 +69,7 @@ const SenderBubble = ({
             key={member.id}
             alt={member.username}
             src={member.photoUrl}
-            className={classes.avatarSmall}
+            className={classes.avatar}
           />
         )
       );
