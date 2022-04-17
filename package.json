@@ -1,0 +1,22 @@
+{
+  "name": "group-messenger",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server/bin/www",
+    "install": "cd server && npm i && cd ../client && npm i",
+    "seed": "cd server && npm run seed",
+    "build": "cd client && npm run build && cd ../server && npm run seed"
+},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Qcent/ProfessorBanana.git"
+  },
+  "author": "Dave Quinn",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Qcent/ProfessorBanana/issues"
+  },
+  "homepage": "https://github.com/Qcent/ProfessorBanana#readme"
+}
