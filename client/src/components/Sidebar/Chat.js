@@ -42,13 +42,6 @@ const Chat = ({
 
   if (otherMemberIds.length > 1) {
     // find the most recent other user that left a message
-
-    console.log(
-      otherMemberIds,
-      'lets see how they sort:: '
-      // sortUsersByRecentActivity([...otherMemberIds])
-    );
-
     let i = conversation.messages.length - 1;
     while (i >= 0 && conversation.messages[i].senderId === user.id) {
       i--;
