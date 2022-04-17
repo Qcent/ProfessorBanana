@@ -73,6 +73,7 @@ const ActiveChat = ({
                   conversation={conversation}
                   userId={user.id}
                   markMessagesRead={markMessagesRead}
+                  groupChat={groupChat}
                 />
                 <Input
                   otherUser={otherUser}

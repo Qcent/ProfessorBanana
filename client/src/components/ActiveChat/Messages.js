@@ -3,9 +3,7 @@ import { Box } from '@material-ui/core';
 import { SenderBubble, OtherUserBubble } from '.';
 import moment from 'moment';
 
-const Messages = (props) => {
-  const { conversation, userId, markMessagesRead } = props;
-
+const Messages = ({ conversation, userId, markMessagesRead, groupChat }) => {
   const { id: conversationId, messages, members } = conversation;
 
   const lastReadOtherUserMessage = () => {
@@ -55,6 +53,7 @@ const Messages = (props) => {
             otherUser={members[`${message.senderId}`]}
             members={members}
             myId={userId}
+            groupChat={groupChat}
           />
         );
       })}
