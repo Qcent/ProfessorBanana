@@ -83,7 +83,11 @@ router.get('/', async (req, res, next) => {
           id: convo.id,
           createdAt: convo.createdAt,
           members: membersObj,
-          otherMemberIds,
+          otherMemberIds: sortUsersByRecentActivity({
+            messages: convo.messages,
+            otherMemberIds,
+            userId,
+          }),
           latestMessageText: convo.latestMessageText,
           messages: convo.messages,
         };
@@ -167,7 +171,11 @@ router.get('/id', async (req, res, next) => {
       id: conversation.id,
       createdAt: conversation.createdAt,
       members: membersObj,
-      otherMemberIds,
+      otherMemberIds: sortUsersByRecentActivity({
+        messages: conversation.messages,
+        otherMemberIds,
+        userId: user.id,
+      }),
       latestMessageText: conversation.latestMessageText,
       messages: conversation.messages,
     });
@@ -231,5 +239,28 @@ router.put('/read', async (req, res, next) => {
     next(error);
   }
 });
+
+// helper function for sorting user ids
+const sortUsersByRecentActivity = (convo) => {
+  const { messages, otherMemberIds: memberIds, userId } = convo;
+
+  let ordered = [];
+  let i = messages.length - 1;
+  while (i >= 0 && memberIds.length) {
+    const { senderId } = messages[i];
+    if (senderId !== userId && !ordered.includes(senderId)) {
+      ordered.push(senderId);
+      const idx = memberIds.indexOf(senderId);
+      if (idx > -1) {
+        memberIds.splice(idx, 1);
+      }
+    }
+    i--;
+  }
+  if (memberIds.length) {
+    ordered.push(...memberIds);
+  }
+  return ordered;
+};
 
 module.exports = router;
