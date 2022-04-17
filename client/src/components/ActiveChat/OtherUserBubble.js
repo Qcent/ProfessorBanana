@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Box, Typography, Avatar } from '@material-ui/core';
+import { BadgeAvatar } from '../Sidebar';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -49,6 +50,7 @@ const OtherUserBubble = ({
   messageId,
   members,
   myId,
+  groupChat,
 }) => {
   const classes = useStyles();
 
@@ -58,23 +60,42 @@ const OtherUserBubble = ({
 
     if (member.lastReadMessage === messageId && memberId !== `${myId}`) {
       avatars.push(
-        <Avatar
-          key={member.id}
-          alt={member.username}
-          src={member.photoUrl}
-          className={classes.avatarSmall}
-        />
+        groupChat.true ? (
+          <BadgeAvatar
+            key={member.id}
+            photoUrl={member.photoUrl}
+            username={member.username}
+            online={member.online}
+            asRead={true}
+          />
+        ) : (
+          <Avatar
+            key={member.id}
+            alt={member.username}
+            src={member.photoUrl}
+            className={classes.avatarSmall}
+          />
+        )
       );
     }
   }
 
   return (
     <Box className={classes.root}>
-      <Avatar
-        alt={otherUser.username}
-        src={otherUser.photoUrl}
-        className={classes.avatar}
-      />
+      {groupChat.true ? (
+        <BadgeAvatar
+          photoUrl={otherUser.photoUrl}
+          username={otherUser.username}
+          online={otherUser.online}
+          inChat={true}
+        />
+      ) : (
+        <Avatar
+          alt={otherUser.username}
+          src={otherUser.photoUrl}
+          className={classes.avatar}
+        />
+      )}
       <Box>
         <Typography className={classes.usernameDate}>
           {otherUser.username} {time}

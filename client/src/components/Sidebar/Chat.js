@@ -34,17 +34,7 @@ const Chat = ({
 }) => {
   const classes = useStyles();
   const { otherMemberIds } = conversation;
-
-  // find the most recent other user that left a message
-  let i = conversation.messages.length - 1;
-  while (i >= 0 && conversation.messages[i].senderId === user.id) {
-    i--;
-  }
-  const otherUser =
-    i >= 0
-      ? conversation.members[conversation.messages[i].senderId] ||
-        conversation.members[otherMemberIds[0]]
-      : conversation.members[otherMemberIds[0]];
+  let otherUser = conversation.members[otherMemberIds[0]];
 
   const handleClick = async () => {
     await setActiveChat(conversation.id);
@@ -64,9 +54,11 @@ const Chat = ({
       <ChatContent conversation={conversation} otherUser={otherUser} />
       <UnreadMessages count={conversation.myUnreadMessageCount} />
       {(typeof conversation.id === 'string' || activeConversation) &&
-        conversation.id !== activeConversation && (
+        conversation.id !== activeConversation.id &&
+        conversation.otherMemberIds.length === 1 &&
+        !activeConversation.members[otherUser.id] && (
           <ChatOptionMenu
-            activeConversation={activeConversation}
+            activeConversation={activeConversation.id}
             makeActiveChat={handleClick}
             addUserToConvo={addUserToConvo}
             otherUser={otherUser}

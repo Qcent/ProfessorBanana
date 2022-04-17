@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Box, Typography, Avatar } from '@material-ui/core';
+import { BadgeAvatar } from '../Sidebar';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -38,7 +39,15 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const SenderBubble = ({ time, text, otherUser, messageId, members, myId }) => {
+const SenderBubble = ({
+  time,
+  text,
+  otherUser,
+  messageId,
+  members,
+  myId,
+  groupChat,
+}) => {
   const classes = useStyles();
 
   let avatars = [];
@@ -47,12 +56,22 @@ const SenderBubble = ({ time, text, otherUser, messageId, members, myId }) => {
 
     if (member.lastReadMessage === messageId && memberId !== `${myId}`) {
       avatars.push(
-        <Avatar
-          key={member.id}
-          alt={member.username}
-          src={member.photoUrl}
-          className={classes.avatar}
-        />
+        groupChat.true ? (
+          <BadgeAvatar
+            key={member.id}
+            photoUrl={member.photoUrl}
+            username={member.username}
+            online={member.online}
+            asRead={true}
+          />
+        ) : (
+          <Avatar
+            key={member.id}
+            alt={member.username}
+            src={member.photoUrl}
+            className={classes.avatarSmall}
+          />
+        )
       );
     }
   }
