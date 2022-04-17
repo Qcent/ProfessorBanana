@@ -34,7 +34,6 @@ const ChatContent = ({ otherUser, conversation }) => {
   const latestMessage = conversation.messages[conversation.messages.length - 1];
   const groupChat = { true: conversation.otherMemberIds.length > 1 };
 
-  console.log(groupChat);
   if (groupChat.true) {
     const { otherMemberIds, members } = conversation;
     groupChat.username = `${members[otherMemberIds[0]].username}, ${

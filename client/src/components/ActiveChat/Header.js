@@ -45,16 +45,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Header = ({ username, online }) => {
+const Header = ({ username, online, groupChat }) => {
   const classes = useStyles();
 
   return (
     <Box className={classes.root}>
       <Box className={classes.content}>
-        <Typography className={classes.username}>{username}</Typography>
+        <Typography className={classes.username}>
+          {groupChat.true ? 'Group Chat w/ ' + groupChat.username : username}
+        </Typography>
         <Box className={`${classes.statusDot} ${online && classes.online}`} />
         <Typography className={classes.statusText}>
-          {online ? 'Online' : 'Offline'}
+          {groupChat.true
+            ? groupChat.onlineCount
+              ? `${groupChat.onlineCount} Online`
+              : 'Offline'
+            : online
+            ? 'Online'
+            : 'Offline'}
         </Typography>
       </Box>
       <MoreHorizIcon classes={{ root: classes.ellipsis }} />
