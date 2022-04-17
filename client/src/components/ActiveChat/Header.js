@@ -54,7 +54,11 @@ const Header = ({ username, online, groupChat }) => {
         <Typography className={classes.username}>
           {groupChat.true ? 'Group Chat w/ ' + groupChat.username : username}
         </Typography>
-        <Box className={`${classes.statusDot} ${online && classes.online}`} />
+        <Box
+          className={`${classes.statusDot} ${
+            (online || groupChat?.onlineCount) && classes.online
+          }`}
+        />
         <Typography className={classes.statusText}>
           {groupChat.true
             ? groupChat.onlineCount
