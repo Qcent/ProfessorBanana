@@ -43,6 +43,7 @@ const Messages = ({ conversation, userId, markMessagesRead, groupChat }) => {
             time={time}
             members={members}
             myId={userId}
+            groupChat={groupChat}
           />
         ) : (
           <OtherUserBubble
