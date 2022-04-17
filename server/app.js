@@ -17,7 +17,12 @@ const app = express();
 app.use(logger('dev'));
 app.use(json());
 app.use(urlencoded({ extended: false }));
-app.use(express.static(join(__dirname, 'public')));
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(join(__dirname, '../client/build')));
+} else {
+  app.use(express.static(join(__dirname, 'public')));
+}
 
 app.use(function (req, res, next) {
   const token = req.headers['x-access-token'];
